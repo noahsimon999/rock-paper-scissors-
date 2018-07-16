@@ -1,0 +1,44 @@
+body {
+    color: white;
+}
+
+.jumbotron {
+    background-color: teal;
+}
+
+.startGame {
+    background-color: red;
+    padding: 10px;
+    height: 100px;
+}
+
+.game {
+    height: 250px;
+}
+
+.game .col-4:nth-child(even) {
+   border-left: 10px solid white;
+   border-right: 10px solid white;
+   background-color: darkblue;
+
+}
+
+.game .col-4:nth-child(odd) {
+    background-color: blue;
+}
+
+.rock:hover, .paper:hover, .scissors:hover {
+    background-color: red;
+}
+
+.chat {
+    height: 250px;
+}
+
+.chat .col-8 {
+    background-color: purple;
+}
+
+.chat .col-4 {
+    background-color: pink;
+}
