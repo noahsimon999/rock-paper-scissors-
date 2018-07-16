@@ -60,6 +60,7 @@ $("#btn-name").click(function(){
     console.log(player1);
     console.log(player2);
 
+    
    
 });
 
