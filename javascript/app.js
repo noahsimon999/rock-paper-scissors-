@@ -118,8 +118,8 @@ function results() {
     // player one choses rock
     if (player1Choice === "rock" && player2Choice === "rock") {
         tie++;
-        $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
-        $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+        $(".p1WinLoss").html("<p>Wins:" + player1Wins + " - Losses: " + player1Losses + " - Tie: " + tie + "</p>");
+        $(".p2WinLoss").html("<p>Wins:" + player2Wins + " - Losses: " + player2Losses + " - Tie: " + tie + "</p>");
         console.log(tie);
     }
     if (player1Choice === "rock" && player2Choice === "paper") {
@@ -127,12 +127,16 @@ function results() {
         player2Wins++;
         $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
         $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+        console.log(player1Losses);
+        console.log(player2Wins);
     }
     if (player1Choice === "rock" && player2Choice === "scissors") {
         player2Losses++;
         player1Wins++;
         $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
         $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+        console.log(player2Losses);
+        console.log(player1Wins);
     }
 
    // player one choses paper
