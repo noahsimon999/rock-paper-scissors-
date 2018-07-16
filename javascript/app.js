@@ -66,6 +66,11 @@ $("#btn-name").click(function(){
 
 var player1Choice = false;
 var player2Choice = false;
+var player1Wins = 0;
+var player1Losses = 0;
+var tie = 0;
+var player2Wins = 0;
+var player2Losses = 0;
 
 function game() {
     if(player1Choice === false) {
@@ -88,19 +93,70 @@ function game() {
         $(".rock2").click(function(){
             player2Choice = "rock";
             $(".prompt2").html($("<h3>").text(player2Choice));
-            console.log(player2Choice)
+            if (player1Choice === "rock" && player2Choice === "rock") {
+                tie++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+                console.log(tie);
+            }
+            if (player1Choice === "rock" && player2Choice === "paper") {
+                player1Loses++;
+                player2Wins++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+            }
+            if (player1Choice === "rock" && player2Choice === "scissors") {
+                player2Loses++;
+                player1Wins++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+            }
         });
         $(".paper2").click(function(){
             player2Choice = "paper";
             $(".prompt2").html($("<h3>").text(player2Choice));
+            if (player1Choice === "paper" && player2Choice === "paper") {
+                tie++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+            }
+            if (player1Choice === "paper" && player2Choice === "scissors") {
+                player1Loses++;
+                player2Wins++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+            }
+            if (player1Choice === "paper" && player2Choice === "rock") {
+                player2Loses++;
+                player1Wins++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+            }
         });
         $(".scissors2").click(function(){
             player2Choice = "scissors";
             $(".prompt2").html($("<h3>").text(player2Choice));
+            if (player1Choice === "scissors" && player2Choice === "scissors") {
+                tie++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+            }
+            if (player1Choice === "scissors" && player2Choice === "rock") {
+                player1Loses++;
+                player2Wins++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+            }
+            if (player1Choice === "scissors" && player2Choice === "paper") {
+                player2Loses++;
+                player1Wins++;
+                $(".p1WinLoss").html("<p>" + player1Wins + " - " + player1Losses + " - " + tie + "</p>");
+                $(".p2WinLoss").html("<p>" + player2Wins + " - " + player2Losses + " - " + tie + "</p>");
+            }
         });
     }
 
-  
+    
 
 }
 
