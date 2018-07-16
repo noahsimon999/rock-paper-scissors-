@@ -49,6 +49,7 @@ $("#btn-name").click(function(){
         database.ref().on("value", function(snapshot) {
             $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");
         });
+        game();
     }
     var addName = $(".form-control").val().trim();
     if (addName === "") {
@@ -58,14 +59,50 @@ $("#btn-name").click(function(){
         document.forms["inputForm"].reset();
     }
     console.log(player1);
-    console.log(player2);
-
-    
-   
+    console.log(player2);   
 });
 
 
 
+var player1Choice = false;
+var player2Choice = false;
+
+function game() {
+    if(player1Choice === false) {
+        $(".rock1").click(function(){
+            player1Choice = "rock";
+            $(".prompt1").html($("<h3>").text(player1Choice));
+        });
+        $(".paper1").click(function(){
+            player1Choice = "paper";
+            $(".prompt1").html($("<h3>").text(player1Choice));
+        });
+        $(".scissors1").click(function(){
+            player1Choice = "scissors";
+            $(".prompt1").html($("<h3>").text(player1Choice));
+        });
+        
+    } 
+    
+    if(player2Choice === false) {
+        $(".rock2").click(function(){
+            player2Choice = "rock";
+            $(".prompt2").html($("<h3>").text(player2Choice));
+            console.log(player2Choice)
+        });
+        $(".paper2").click(function(){
+            player2Choice = "paper";
+            $(".prompt2").html($("<h3>").text(player2Choice));
+        });
+        $(".scissors2").click(function(){
+            player2Choice = "scissors";
+            $(".prompt2").html($("<h3>").text(player2Choice));
+        });
+    }
+
+  
+
+}
 
 
 

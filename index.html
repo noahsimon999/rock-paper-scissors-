@@ -20,30 +20,41 @@
         <div class="jumbotron">
             <h1>Rock Paper Scissors</h1>
         </div>
-        <div class="row startGame">
+        <!-- <div class="row startGame">
             <div class="col col-12">
                 <form id="inputForm">
                     <input type="text" class="form-control" id="inputName" required>
                     <button type="button" id="btn-name" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>Submit</button>
                 </form>
             </div>
-        </div>
+        </div> -->
+        <form id="inputForm">
+            <div class="input-group startGame">
+                <input type="text" class="form-control" id="inputName" required>
+                <span class="input-group-btn">
+                    <button type="button" id="btn-name" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>Submit</button>
+                </span>
+            </div><!-- /input-group -->
+        </form>
+        
         <div class="row game">
             <div class="col-4">
-                <div class="p1Name"></div>
-                <h1 class="rock">Rock</h1>
-                <h1 class="paper">Paper</h1>
-                <h1 class="scissors">Scissors</h1>
+                <div class="p1Name">Player 1 Name</div>
+                <h1 class="rock1">Rock</h1>
+                <h1 class="paper1">Paper</h1>
+                <h1 class="scissors1">Scissors</h1>
                 <div class"p1WinLoss">Win: 0 - Loss: 0 - Tie: 0</div>
             </div>
             <div class="col-4">
-                <div class="prompt">Play the game!</div>
+                <div class="prompt1">Play the game!</div>
+                <div class="prompt3">Play the game!</div>
+                <div class="prompt2">Play the game!</div>
             </div>
             <div class="col-4">
-                <div class="p2Name"></div>
-                <h1 class="rock">Rock</h1>
-                <h1 class="paper">Paper</h1>
-                <h1 class="scissors">Scissors</h1>
+                <div class="p2Name">Player 2 Name</div>
+                <h1 class="rock2">Rock</h1>
+                <h1 class="paper2">Paper</h1>
+                <h1 class="scissors2">Scissors</h1>
                 <div class"p2WinLoss">Win: 0 - Loss: 0 - Tie: 0</div>
             </div>
         </div>

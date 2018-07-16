@@ -12,6 +12,14 @@ body {
     height: 100px;
 }
 
+#inputName {
+    font-size: 4em;
+}
+
+#btn-name {
+    float: right;
+}
+
 .game {
     height: 250px;
 }
