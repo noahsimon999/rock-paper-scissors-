@@ -40,14 +40,16 @@ $("#btn-name").click(function(){
         database.ref("/connections/player1").set({
             player1: player1Name,
             player1Connected: player1Connected
-        });     
+        });
+        database.ref().on("value", function(snapshot) {
+            $(".p1Name").html("<p>" + snapshot.val().connections.player1.player1 + "</p>");
+        });
+        player1 = true;
 
         var connectedRef = firebase.database().ref(".info/connected");
         connectedRef.on("value", function(snap) {
             if (snap.val() === true) {
                 $(".chatArea").prepend("<div>" + player1Name + " has connected</div>");
-                $(".p1Name").html("<p>" + snapshot.val().connections.player1.player1 + "</p>");
-                player1 = true;
                 console.log("player 1 connected");
             } else {
                 alert("not connected");
