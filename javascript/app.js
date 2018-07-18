@@ -43,10 +43,20 @@ $("#btn-name").click(function(){
         });
         database.ref().on("value", function(snapshot) {
             $(".p1Name").html("<p>" + snapshot.val().connections.player1.player1 + "</p>");
-            $(".chatArea").prepend("<div>" + snapshot.val().connections.player1.player1 + " has connected</div>");
+            
             console.log("test");
         });
         player1 = true;
+
+        var connectedRef = firebase.database().ref(".info/connected");
+        connectedRef.on("value", function(snap) {
+          if (snap.val() === true) {
+            $(".chatArea").prepend("<div>" + player1Name + " has connected</div>");
+          } else {
+            alert("not connected");
+          }
+        });
+
     } else if(player2 === false) {
         player2Name = $("#inputName").val().trim();
         database.ref("/connections/player2").set({
@@ -55,9 +65,18 @@ $("#btn-name").click(function(){
         });
         database.ref().on("value", function(snapshot) {
             $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");
-            $(".chatArea").prepend("<div>" + snapshot.val().connections.player2.player2 + " has connected</div>");
+            
         });
         player2 = true;
+
+        var connectedRef = firebase.database().ref(".info/connected");
+        connectedRef.on("value", function(snap) {
+          if (snap.val() === true) {
+            $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
+          } else {
+            alert("not connected");
+          }
+        });
         game();
     }
     var addName = $(".form-control").val().trim();
