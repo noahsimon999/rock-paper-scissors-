@@ -32,19 +32,8 @@ var player2Name = "";
 var player1Connected = true;
 var player2Connected = true;
 
-$("#btn-name").click(function(){
-    
-
-    if(player1 === false) { 
-        player1Name = $("#inputName").val().trim();
-        database.ref("/connections/player1").set({
-            player1: player1Name,
-            player1Connected: player1Connected
-        });
-        
-        
-
-        var connectedRef = firebase.database().ref(".info/connected");
+function update() {
+    var connectedRef = firebase.database().ref(".info/connected");
         connectedRef.on("value", function(snap) {
             if (snap.val() === true) {
                 $(".p1Name").html("<p>" + player1Name + "</p>");
@@ -55,6 +44,25 @@ $("#btn-name").click(function(){
                 alert("not connected");
             }
         });
+}
+
+
+
+$("#btn-name").click(function(){
+    
+
+    if(player1 === false) { 
+        player1Name = $("#inputName").val().trim();
+        database.ref("/connections/player1").set({
+            player1: player1Name,
+            player1Connected: player1Connected
+        });
+
+        update();
+        
+        
+
+        
 
     } else if(player2 === false) {
         player2Name = $("#inputName").val().trim();
