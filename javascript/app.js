@@ -33,7 +33,7 @@ var player1Connected = true;
 var player2Connected = true;
 
 $("#btn-name").click(function(){
-    event.preventDefault();
+    
 
     if(player1 === false) { 
         player1Name = $("#inputName").val().trim();
@@ -62,15 +62,13 @@ $("#btn-name").click(function(){
             player2: player2Name,
             player2Connected: player2Connected
         });
-        database.ref().on("value", function(snapshot) {
-            $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");  
-        });
-        player2 = true;
-
+           
         var connectedRef = firebase.database().ref(".info/connected");
         connectedRef.on("value", function(snap) {
           if (snap.val() === true) {
+            $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");  
             $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
+            player2 = true;
             console.log("player 2 connected");
           } else {
             alert("not connected");
