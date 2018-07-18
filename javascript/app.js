@@ -52,6 +52,7 @@ $("#btn-name").click(function(){
         connectedRef.on("value", function(snap) {
           if (snap.val() === true) {
             $(".chatArea").prepend("<div>" + player1Name + " has connected</div>");
+            console.log("player 1 connected");
           } else {
             alert("not connected");
           }
@@ -73,6 +74,7 @@ $("#btn-name").click(function(){
         connectedRef.on("value", function(snap) {
           if (snap.val() === true) {
             $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
+            console.log("player 2 connected");
           } else {
             alert("not connected");
           }
