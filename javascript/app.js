@@ -57,6 +57,7 @@ $("#btn-name").click(function(){
             player1: player1Name,
             player1Connected: player1Connected
         });
+        
 
         update();
         
@@ -74,7 +75,7 @@ $("#btn-name").click(function(){
         var connectedRef = firebase.database().ref(".info/connected");
         connectedRef.on("value", function(snap) {
           if (snap.val() === true) {
-            $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");  
+            $(".p2Name").html("<p>" + player2Name + "</p>");  
             $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
             player2 = true;
             console.log("player 2 connected");
