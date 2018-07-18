@@ -27,6 +27,8 @@ var database = firebase.database();
 
 var player1 = false;
 var player2 = false;
+var player1Name = "";
+var player2Name = "";
 var player1Connected = true;
 var player2Connected = true;
 
@@ -35,24 +37,29 @@ $("#btn-name").click(function(){
     event.preventDefault();
 
     if(player1 === false) { 
-        player1 = $("#inputName").val().trim();
+        player1Name = $("#inputName").val().trim();
         database.ref("/connections/player1").set({
-            player1: player1,
+            player1: player1Name,
             player1Connected: player1Connected
         });
         database.ref().on("value", function(snapshot) {
             $(".p1Name").html("<p>" + snapshot.val().connections.player1.player1 + "</p>");
+            // $(".chatArea").prepend("<div>" + snapshot.val().connections.player1.player1 + " has connected</div>");
+            console.log("test");
         });
+        player1 = true;
         
     } else if(player2 === false) {
-        player2 = $("#inputName").val().trim();
+        player2Name = $("#inputName").val().trim();
         database.ref("/connections/player2").set({
-            player2: player2,
+            player2: player2Name,
             player2Connected: player2Connected
         });
         database.ref().on("value", function(snapshot) {
             $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");
+            // $(".chatArea").prepend("<div>" + snapshot.val().connections.player2.player2 + " has connected</div>");
         });
+        player2 = true;
         game();
     }
     var addName = $(".form-control").val().trim();
@@ -65,6 +72,45 @@ $("#btn-name").click(function(){
     console.log(player1);
     console.log(player2);   
 });
+
+
+var connectionsRef = database.ref("/connections");
+
+// '.info/connected' is a special location provided by Firebase that is updated every time
+// the client's connection state changes.
+// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
+var connectedRef = database.ref(".info/connected");
+
+connectedRef.on("value", function(snap) {
+    if (snap.val()) {
+        var con = connectionsRef.push(true);
+        con.onDisconnect().remove();
+        $(".chatArea").prepend("<div>" + player1Name + " has disconnected</div>");
+    }
+});
+
+connectionsRef.on("value", function(snap) {
+    $(".chatArea").prepend("<div>" + player1Name + " has connected</div>");
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 $(document).keydown(function (e) {
     var key_one = 13;
@@ -234,8 +280,6 @@ $("#btn-chat").on("click", function (event) {
     // Get inputs
     name = player1;
     chat = $("#chat-input").val().trim();
-
-    localStorage.setItem("name", name);
 
     // Change what is saved in firebase
     database.ref("/chat").push({
