@@ -32,7 +32,6 @@ var player2Name = "";
 var player1Connected = true;
 var player2Connected = true;
 
-
 $("#btn-name").click(function(){
     event.preventDefault();
 
@@ -44,11 +43,10 @@ $("#btn-name").click(function(){
         });
         database.ref().on("value", function(snapshot) {
             $(".p1Name").html("<p>" + snapshot.val().connections.player1.player1 + "</p>");
-            // $(".chatArea").prepend("<div>" + snapshot.val().connections.player1.player1 + " has connected</div>");
+            $(".chatArea").prepend("<div>" + snapshot.val().connections.player1.player1 + " has connected</div>");
             console.log("test");
         });
         player1 = true;
-        
     } else if(player2 === false) {
         player2Name = $("#inputName").val().trim();
         database.ref("/connections/player2").set({
@@ -57,7 +55,7 @@ $("#btn-name").click(function(){
         });
         database.ref().on("value", function(snapshot) {
             $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");
-            // $(".chatArea").prepend("<div>" + snapshot.val().connections.player2.player2 + " has connected</div>");
+            $(".chatArea").prepend("<div>" + snapshot.val().connections.player2.player2 + " has connected</div>");
         });
         player2 = true;
         game();
@@ -72,45 +70,6 @@ $("#btn-name").click(function(){
     console.log(player1);
     console.log(player2);   
 });
-
-
-var connectionsRef = database.ref("/connections");
-
-// '.info/connected' is a special location provided by Firebase that is updated every time
-// the client's connection state changes.
-// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
-var connectedRef = database.ref(".info/connected");
-
-connectedRef.on("value", function(snap) {
-    if (snap.val()) {
-        var con = connectionsRef.push(true);
-        con.onDisconnect().remove();
-        $(".chatArea").prepend("<div>" + player1Name + " has disconnected</div>");
-    }
-});
-
-connectionsRef.on("value", function(snap) {
-    $(".chatArea").prepend("<div>" + player1Name + " has connected</div>");
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 $(document).keydown(function (e) {
     var key_one = 13;
@@ -278,7 +237,7 @@ $("#btn-chat").on("click", function (event) {
     event.preventDefault();
 
     // Get inputs
-    name = player1;
+    name = player1Name;
     chat = $("#chat-input").val().trim();
 
     // Change what is saved in firebase
