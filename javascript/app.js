@@ -43,8 +43,6 @@ $("#btn-name").click(function(){
         });
         database.ref().on("value", function(snapshot) {
             $(".p1Name").html("<p>" + snapshot.val().connections.player1.player1 + "</p>");
-            
-            console.log("test");
         });
         player1 = true;
 
@@ -65,8 +63,7 @@ $("#btn-name").click(function(){
             player2Connected: player2Connected
         });
         database.ref().on("value", function(snapshot) {
-            $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");
-            
+            $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");  
         });
         player2 = true;
 
