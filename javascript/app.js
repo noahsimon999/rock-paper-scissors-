@@ -54,8 +54,8 @@ function update2() {
                 console.log("player 2 connected");
             } else {
                 $(".chatArea").prepend("<div>" + player2Name + " has disconnected</div>");
-        }
-    });
+            }
+         });
 }
 
 $("#btn-name").click(function(){
@@ -235,7 +235,7 @@ function score() {
 var name = "";
 var chat = "";
 
-function chat() {
+function chatbox() {
     $("#btn-chat").on("click", function (event) {
         // Prevent the chat from refreshing
         event.preventDefault();
@@ -252,19 +252,6 @@ function chat() {
 
         $(".form-control").val("");
     });
-};
-
-
-
-
-
-
-
-
-
-if (player1Connected === true) {
-    chat();
-}
 
 // Firebase is always watching for changes to the data.
 // When changes occurs it will print them to console and html
@@ -280,7 +267,17 @@ database.ref("/chat").on("child_added", function (snapshot) {
     // Change the HTML    
     $(".chatArea").prepend("<div>" + snapshot.val().name + ": " + snapshot.val().chat + "</div>");
 
-    // If any errors are experienced, log them to console.
-}, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
+        // If any errors are experienced, log them to console.
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
 });
+
+}
+
+
+chatbox();
+
+
+
+
+
