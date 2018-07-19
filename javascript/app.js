@@ -114,12 +114,18 @@ function update2() {
     var connectedRef = firebase.database().ref(".info/connected");
         connectedRef.on("value", function(snap) {
             if (snap.val() === true) {
-                $(".p2Name").html("<p>" + player2Name + "</p>");  
-                $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
-                player2Connected = true;
+                let connectedRef = firebase.database().ref("connections/player2/player2");
+                connectedRef.on("value", function(snapshot) {
+                $(".p2Name").html("<p>" + snapshot.val() + "</p>");
+                $(".chatArea").prepend("<div>" + snapshot.val() + " has connected</div>");
+                player1Connected = true;
                 console.log("player 2 connected");
+                });
             } else {
-                $(".chatArea").prepend("<div>" + player2Name + " has disconnected</div>");
+                let connectedRef = firebase.database().ref("connections/player2/player2");
+                connectedRef.on("value", function(snapshot) {
+                $(".chatArea").prepend("<div>" + snapshot.val() + " has disconnected</div>");
+                });
             }
         });
 }
