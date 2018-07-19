@@ -31,22 +31,12 @@ var player2Name = "";
 var player1Connected = false;
 var player2Connected = false;
 
-function reSync() {
-    $(".p1Name").html("<p>" + player1Name + "</p>");
-    $(".p2Name").html("<p>" + player2Name + "</p>");  
-
-
-
-}
-
-
-
-
+update1();
+update2();
 
 
 $("#btn-name").click(function(){
     
-
     if(player1Connected === false) { 
         player1Name = $("#inputName").val().trim();
         database.ref("/connections/player1").set({
@@ -80,14 +70,14 @@ $(document).keydown(function (e) {
     if (e.keyCode == key_one) {
         event.preventDefault();
  
-        if (player1 === false) {
+        if (player1Connected === false) {
             player1Name = $("#inputName").val().trim();
             database.ref("/connections/player1").set({
                 player1: player1Name,
             });
             update1();
  
-        } else if (player2 === false) {
+        } else if (player2Connected === false) {
             player2Name = $("#inputName").val().trim();
             database.ref("/connections/player2").set({
                 player2: player2Name,
@@ -109,6 +99,7 @@ $(document).keydown(function (e) {
                 $(".p1Name").html("<p>" + snapshot.val() + "</p>");
                 $(".chatArea").prepend("<div>" + snapshot.val() + " has connected</div>");
                 player1Connected = true;
+                console.log("player 1 connected");
                 });
             } else {
                 let connectedRef = firebase.database().ref("connections/player1/player1");
@@ -130,7 +121,7 @@ function update2() {
             } else {
                 $(".chatArea").prepend("<div>" + player2Name + " has disconnected</div>");
             }
-         });
+        });
 }
 
 
@@ -153,7 +144,6 @@ function playerChoice() {
             player1Choice = "scissors";
             $(".prompt1").html($("<h3>").text(player1Choice));
         });
-        
     } 
     
     if(player2Choice === false) {
@@ -255,7 +245,7 @@ function score() {
 var name = "";
 var chat = "";
 
-function chatbox() {
+function chatBox() {
     $("#btn-chat").on("click", function (event) {
         // Prevent the chat from refreshing
         event.preventDefault();
@@ -265,14 +255,26 @@ function chatbox() {
         chat = $("#chat-input").val().trim();
 
         // Change what is saved in firebase
-        database.ref("/chat").push({
-            name: name,
-            chat: chat,
-        });
+        if (player1Connected === true) {
+        
+            database.ref("/chat").push({
+                name: name,
+                chat: chat,
+            });
+            $(".form-control").val("");
+            
+        }
 
-        $(".form-control").val("");
+        if (player2Connected === true) {
+        
+            database.ref("/chat").push({
+                name: name,
+                chat: chat,
+            });
+            $(".form-control").val("");
+        }
+
     });
-
 // Firebase is always watching for changes to the data.
 // When changes occurs it will print them to console and html
 database.ref("/chat").on("child_added", function (snapshot) {
@@ -295,7 +297,7 @@ database.ref("/chat").on("child_added", function (snapshot) {
 }
 
 
-chatbox();
+chatBox();
 
 
 
