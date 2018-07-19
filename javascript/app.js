@@ -31,32 +31,18 @@ var player2Name = "";
 var player1Connected = false;
 var player2Connected = false;
 
-function update1() {
-    var connectedRef = firebase.database().ref(".info/connected");
-        connectedRef.on("value", function(snap) {
-            if (snap.val() === true) {
-                $(".p1Name").html("<p>" + player1Name + "</p>");
-                $(".chatArea").prepend("<div>" + player1Name + " has connected</div>");
-                player1Connected = true;
-            } else {
-                $(".chatArea").prepend("<div>" + player1Name + " has disconnected</div>");
-            }
-        });
+function reSync() {
+    $(".p1Name").html("<p>" + player1Name + "</p>");
+    $(".p2Name").html("<p>" + player2Name + "</p>");  
+
+
+
 }
 
-function update2() {
-    var connectedRef = firebase.database().ref(".info/connected");
-        connectedRef.on("value", function(snap) {
-            if (snap.val() === true) {
-                $(".p2Name").html("<p>" + player2Name + "</p>");  
-                $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
-                player2Connected = true;
-                console.log("player 2 connected");
-            } else {
-                $(".chatArea").prepend("<div>" + player2Name + " has disconnected</div>");
-            }
-         });
-}
+
+
+
+
 
 $("#btn-name").click(function(){
     
@@ -114,6 +100,40 @@ $(document).keydown(function (e) {
  });
 
 
+ function update1() {
+    var connectedRef = firebase.database().ref(".info/connected");
+        connectedRef.on("value", function(snap) {
+            if (snap.val() === true) {
+                let connectedRef = firebase.database().ref("connections/player1/player1");
+                connectedRef.on("value", function(snapshot) {
+                $(".p1Name").html("<p>" + snapshot.val() + "</p>");
+                $(".chatArea").prepend("<div>" + snapshot.val() + " has connected</div>");
+                player1Connected = true;
+                });
+            } else {
+                let connectedRef = firebase.database().ref("connections/player1/player1");
+                connectedRef.on("value", function(snapshot) {
+                $(".chatArea").prepend("<div>" + snapshot.val() + " has disconnected</div>");
+                });
+            }
+        });
+}
+
+function update2() {
+    var connectedRef = firebase.database().ref(".info/connected");
+        connectedRef.on("value", function(snap) {
+            if (snap.val() === true) {
+                $(".p2Name").html("<p>" + player2Name + "</p>");  
+                $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
+                player2Connected = true;
+                console.log("player 2 connected");
+            } else {
+                $(".chatArea").prepend("<div>" + player2Name + " has disconnected</div>");
+            }
+         });
+}
+
+
 
 var player1Choice = false;
 var player2Choice = false;
@@ -140,17 +160,17 @@ function playerChoice() {
         $(".rock2").click(function(){
             player2Choice = "rock";
             $(".prompt2").html($("<h3>").text(player2Choice));
-            results();
+            winLossValidator();
         });
         $(".paper2").click(function(){
             player2Choice = "paper";
             $(".prompt2").html($("<h3>").text(player2Choice));
-            results();
+            winLossValidator();
         });
         $(".scissors2").click(function(){
             player2Choice = "scissors";
             $(".prompt2").html($("<h3>").text(player2Choice));
-            results();
+            winLossValidator();
         });
     }
 }
