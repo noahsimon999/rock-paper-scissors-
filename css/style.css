@@ -3,21 +3,23 @@ body {
 }
 
 .jumbotron {
-    background-color: teal;
+    background-color: #568EA3;
 }
 
 .startGame {
-    background-color: red;
+    background-color: #283044;
     padding: 10px;
     height: 100px;
 }
 
 #inputName {
     font-size: 4em;
+    height: 80px;
 }
 
 #btn-name {
     float: right;
+    height: 80px;
 }
 
 .game {
@@ -27,16 +29,16 @@ body {
 .game .col-4:nth-child(even) {
    border-left: 10px solid white;
    border-right: 10px solid white;
-   background-color: darkblue;
+   background-color: #BFA89E;
 
 }
 
 .game .col-4:nth-child(odd) {
-    background-color: blue;
+    background-color: #A76D60;
 }
 
 .rock:hover, .paper:hover, .scissors:hover {
-    background-color: red;
+    background-color: #283044;
 }
 
 .chat {
@@ -47,12 +49,18 @@ body {
 .chatArea {
     overflow-y: scroll;
     height: 220px;
+    
 }
 
 .chat .col-8 {
-    background-color: purple;
+    background-color: #283044;
 }
 
 .chat .col-4 {
-    background-color: pink;
+    background-color: #568EA3;
+}
+
+#btn-chat {
+    height: 190px;
+    width: 100%;
 }

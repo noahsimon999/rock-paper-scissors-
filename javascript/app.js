@@ -32,21 +32,32 @@ var player2Name = "";
 var player1Connected = true;
 var player2Connected = true;
 
-function update() {
+function update1() {
     var connectedRef = firebase.database().ref(".info/connected");
         connectedRef.on("value", function(snap) {
             if (snap.val() === true) {
                 $(".p1Name").html("<p>" + player1Name + "</p>");
                 $(".chatArea").prepend("<div>" + player1Name + " has connected</div>");
                 player1 = true;
-                console.log("player 1 connected");
             } else {
-                alert("not connected");
+                $(".chatArea").prepend("<div>" + player1Name + " has disconnected</div>");
             }
         });
 }
 
-
+function update2() {
+    var connectedRef = firebase.database().ref(".info/connected");
+        connectedRef.on("value", function(snap) {
+            if (snap.val() === true) {
+                $(".p2Name").html("<p>" + player2Name + "</p>");  
+                $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
+                player2 = true;
+                console.log("player 2 connected");
+            } else {
+                $(".chatArea").prepend("<div>" + player2Name + " has disconnected</div>");
+        }
+    });
+}
 
 $("#btn-name").click(function(){
     
@@ -55,36 +66,19 @@ $("#btn-name").click(function(){
         player1Name = $("#inputName").val().trim();
         database.ref("/connections/player1").set({
             player1: player1Name,
-            player1Connected: player1Connected
         });
-    
-        update();
-        
-        
-
-        
-
+        update1();
     } else if(player2 === false) {
         player2Name = $("#inputName").val().trim();
         database.ref("/connections/player2").set({
             player2: player2Name,
-            player2Connected: player2Connected
         });
-           
-        var connectedRef = firebase.database().ref(".info/connected");
-        connectedRef.on("value", function(snap) {
-          if (snap.val() === true) {
-            $(".p2Name").html("<p>" + player2Name + "</p>");  
-            $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
-            player2 = true;
-            console.log("player 2 connected");
-          } else {
-            alert("not connected");
-          }
-        });
+        update2();
         game();
     }
+    
     var addName = $(".form-control").val().trim();
+    
     if (addName === "") {
         return false;
     }
@@ -102,28 +96,18 @@ $(document).keydown(function (e) {
         event.preventDefault();
  
         if (player1 === false) {
-            player1 = $("#inputName").val().trim();
- 
-            database.ref("connections/player1").set({
-                player1: player1,
-                player1Connected: player1Connected
+            player1Name = $("#inputName").val().trim();
+            database.ref("/connections/player1").set({
+                player1: player1Name,
             });
- 
-            database.ref().on("value", function (snapshot) {
-                $(".p1Name").html("<p>" + snapshot.val().connections.player1.player1 + "</p>");
-            });
+            update1();
  
         } else if (player2 === false) {
-            player2 = $("#inputName").val().trim();
- 
-            database.ref("connections/player2").set({
-                player2: player2,
-                player2Connected: player2Connected
+            player2Name = $("#inputName").val().trim();
+            database.ref("/connections/player2").set({
+                player2: player2Name,
             });
- 
-            database.ref().on("value", function (snapshot) {
-                $(".p2Name").html("<p>" + snapshot.val().connections.player2.player2 + "</p>");
-            });
+            update2();
             game();
         }
         $(".form-control").val("");
@@ -136,7 +120,7 @@ var player1Choice = false;
 var player2Choice = false;
 
 
-function game() {
+function playerChoice() {
     if(player1Choice === false) {
         $(".rock1").click(function(){
             player1Choice = "rock";
@@ -170,9 +154,6 @@ function game() {
             results();
         });
     }
-
-    
-
 }
 
 var player1Wins = 0;
@@ -181,23 +162,23 @@ var tie = 0;
 var player2Wins = 0;
 var player2Losses = 0;
 
-function results() {
+function winLossValidator() {
     
     // player one choses rock
     if (player1Choice === "rock" && player2Choice === "rock") {
         tie++;
-        winLossValidator();
+        score();
     
     } else if (player1Choice === "rock" && player2Choice === "paper") {
         player1Losses++;
         player2Wins++;
-        winLossValidator();
+        score();
         console.log(player1Losses);
         console.log(player2Wins);
     } else if (player1Choice === "rock" && player2Choice === "scissors") {
         player2Losses++;
         player1Wins++;
-        winLossValidator();
+        score();
         console.log(player2Losses);s
         console.log(player1Wins);
     }
@@ -205,37 +186,37 @@ function results() {
    // player one choses paper
     if (player1Choice === "paper" && player2Choice === "paper") {
         tie++;
-        winLossValidator();
+        score();
     }
     if (player1Choice === "paper" && player2Choice === "scissors") {
         player1Losses++;
         player2Wins++;
-        winLossValidator();
+        score();
     }
     if (player1Choice === "paper" && player2Choice === "rock") {
         player2Losses++;
         player1Wins++;
-        winLossValidator();
+        score();
     }
 
     // player one choses scissors
     if (player1Choice === "scissors" && player2Choice === "scissors") {
         tie++;
-        winLossValidator();
+        score();
     }
     if (player1Choice === "scissors" && player2Choice === "rock") {
         player1Losses++;
         player2Wins++;
-        winLossValidator();
+        score();
     }
     if (player1Choice === "scissors" && player2Choice === "paper") {
         player2Losses++;
         player1Wins++;
-        winLossValidator();
+        score();
     }
 }
 
-function winLossValidator() {
+function score() {
     $(".p1WinLoss").html("<p>Wins: " + player1Wins + " - Loss: " + player1Losses + " - Tie: " + tie + "</p>");
     $(".p2WinLoss").html("<p>Wins: " + player2Wins + " - Loss: " + player2Losses + " - Tie: " + tie + "</p>");
 }
@@ -255,24 +236,38 @@ function winLossValidator() {
 var name = "";
 var chat = "";
 
-// Click Button changes what is stored in firebase
-$("#btn-chat").on("click", function (event) {
-    // Prevent the chat from refreshing
-    event.preventDefault();
+function chat() {
+    $("#btn-chat").on("click", function (event) {
+        // Prevent the chat from refreshing
+        event.preventDefault();
 
-    // Get inputs
-    name = player1Name;
-    chat = $("#chat-input").val().trim();
+        // Get inputs
+        name = player1Name;
+        chat = $("#chat-input").val().trim();
 
-    // Change what is saved in firebase
-    database.ref("/chat").push({
-        name: name,
-        chat: chat,
+        // Change what is saved in firebase
+        database.ref("/chat").push({
+            name: name,
+            chat: chat,
+        });
+
+        $(".form-control").val("");
     });
+}
 
-    $(".form-control").val("");
-});
 
+
+
+
+
+
+
+
+if (player1connected === true) {
+    chat()
+} else {
+    return false(); 
+}
 
 // Firebase is always watching for changes to the data.
 // When changes occurs it will print them to console and html
