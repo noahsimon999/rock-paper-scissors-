@@ -31,8 +31,21 @@ var player2Name = "";
 var player1Connected = false;
 var player2Connected = false;
 
-update1();
-update2();
+
+let connectedRef1 = firebase.database().ref("connections/player1");
+    connectedRef1.on("value", function(snapshot) {
+        if (snapshot.val().connected === true) {
+            update1();
+        }
+    });
+
+
+let connectedRef2 = firebase.database().ref("connections/player2");
+    connectedRef2.on("value", function(snapshot) {
+        if (snapshot.val().connected === true) {
+            update2();
+        }
+    });
 
 
 $("#btn-name").click(function(){
@@ -41,12 +54,14 @@ $("#btn-name").click(function(){
         player1Name = $("#inputName").val().trim();
         database.ref("/connections/player1").set({
             player1: player1Name,
+            connected: true
         });
         update1();
     } else if(player2Connected === false) {
         player2Name = $("#inputName").val().trim();
         database.ref("/connections/player2").set({
             player2: player2Name,
+            connected: true
         });
         update2();
         playerChoice();
@@ -74,6 +89,7 @@ $(document).keydown(function (e) {
             player1Name = $("#inputName").val().trim();
             database.ref("/connections/player1").set({
                 player1: player1Name,
+
             });
             update1();
  
