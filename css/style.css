@@ -44,12 +44,12 @@ body {
 
 .chat {
     height: 250px;
-    border: 10px solid grey;
+    border: 10px solid white;
 }
 
 .chatArea {
     overflow-y: scroll;
-    height: 220px;
+    height: 230px;
     
 }
 

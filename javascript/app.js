@@ -24,13 +24,12 @@ var config = {
     firebase.initializeApp(config);
 
 var database = firebase.database();
-
 var player1 = false;
 var player2 = false;
 var player1Name = "";
 var player2Name = "";
-var player1Connected = true;
-var player2Connected = true;
+var player1Connected = false;
+var player2Connected = false;
 
 function update1() {
     var connectedRef = firebase.database().ref(".info/connected");
@@ -38,7 +37,7 @@ function update1() {
             if (snap.val() === true) {
                 $(".p1Name").html("<p>" + player1Name + "</p>");
                 $(".chatArea").prepend("<div>" + player1Name + " has connected</div>");
-                player1 = true;
+                player1Connected = true;
             } else {
                 $(".chatArea").prepend("<div>" + player1Name + " has disconnected</div>");
             }
@@ -51,7 +50,7 @@ function update2() {
             if (snap.val() === true) {
                 $(".p2Name").html("<p>" + player2Name + "</p>");  
                 $(".chatArea").prepend("<div>" + player2Name + " has connected</div>");
-                player2 = true;
+                player2Connected = true;
                 console.log("player 2 connected");
             } else {
                 $(".chatArea").prepend("<div>" + player2Name + " has disconnected</div>");
@@ -62,19 +61,19 @@ function update2() {
 $("#btn-name").click(function(){
     
 
-    if(player1 === false) { 
+    if(player1Connected === false) { 
         player1Name = $("#inputName").val().trim();
         database.ref("/connections/player1").set({
             player1: player1Name,
         });
         update1();
-    } else if(player2 === false) {
+    } else if(player2Connected === false) {
         player2Name = $("#inputName").val().trim();
         database.ref("/connections/player2").set({
             player2: player2Name,
         });
         update2();
-        game();
+        playerChoice();
     }
     
     var addName = $(".form-control").val().trim();
@@ -85,8 +84,8 @@ $("#btn-name").click(function(){
     else {
         document.forms["inputForm"].reset();
     }
-    console.log(player1);
-    console.log(player2);   
+    console.log(player1Connected);
+    console.log(player2Connected);   
 });
 
 $(document).keydown(function (e) {
@@ -108,7 +107,7 @@ $(document).keydown(function (e) {
                 player2: player2Name,
             });
             update2();
-            game();
+            playerChoice();
         }
         $(".form-control").val("");
     }
