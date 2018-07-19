@@ -253,7 +253,7 @@ function chat() {
 
         $(".form-control").val("");
     });
-}
+};
 
 
 
@@ -263,10 +263,8 @@ function chat() {
 
 
 
-if (player1connected === true) {
-    chat()
-} else {
-    return false(); 
+if (player1Connected === true) {
+    chat();
 }
 
 // Firebase is always watching for changes to the data.

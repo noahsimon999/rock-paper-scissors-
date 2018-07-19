@@ -1,5 +1,6 @@
 body {
     color: white;
+    background-color: #283044;
 }
 
 .jumbotron {
@@ -34,7 +35,7 @@ body {
 }
 
 .game .col-4:nth-child(odd) {
-    background-color: #A76D60;
+    background-color: #568EA3;
 }
 
 .rock:hover, .paper:hover, .scissors:hover {
