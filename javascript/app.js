@@ -36,6 +36,8 @@ let connectedRef1 = firebase.database().ref("connections/player1");
     connectedRef1.on("value", function(snapshot) {
         if (snapshot.val().connected === true) {
             update1();
+        } else {
+            connectedRef1.push(true).onDisconnect().remove()
         }
     });
 
@@ -44,6 +46,9 @@ let connectedRef2 = firebase.database().ref("connections/player2");
     connectedRef2.on("value", function(snapshot) {
         if (snapshot.val().connected === true) {
             update2();
+
+        } else {
+            connectedRef2.push(true).onDisconnect().remove()
         }
     });
 
