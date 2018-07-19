@@ -57,8 +57,7 @@ $("#btn-name").click(function(){
             player1: player1Name,
             player1Connected: player1Connected
         });
-        
-
+    
         update();
         
         
